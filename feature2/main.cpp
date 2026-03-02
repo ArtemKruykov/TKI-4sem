@@ -11,44 +11,34 @@ int main()
 {
     setlocale(LC_ALL, "RUSSIAN");
     int n;
-
-    std::cout << "Введите количество элементов (n): ";
+    
+    std::cout << "Введите четное количество элементов: ";
     std::cin >> n;
 
     if (n % 2 != 0)
     {
-        std::cout << "Ошибка: n должно быть четным!" << std::endl;
+        std::cout << "Ошибка: n должно быть четным\n";
         return 0;
     }
 
     std::list<int> L;
 
-    std::cout << "Введите " << n << " целых чисел: ";
+    std::cout << "Введите элементы: ";
+        std::copy_n(std::istream_iterator<int>(std::cin),
+        n,
+        std::back_inserter(L));
+    auto i = L.begin();
+    std::advance(i, L.size() / 2);
 
-    for (int k = 0; k < n; ++k)
+    for (auto j = i; j != L.begin(); )
     {
-        int x;
-        std::cin >> x;
-        L.push_back(x);
-    }
-
-    std::list<int>::iterator i = L.begin();
-    std::advance(i, n / 2);
-
-    for (int k = 0; k < n / 2; ++k)
-    {
-        L.insert(i--, -1);
+        L.insert(j--, -1);
     }
 
     std::cout << "Результат: ";
 
-    std::copy(
-        L.begin(),
-        L.end(),
-        std::ostream_iterator<int>(std::cout, " ")
-    );
-
-    std::cout << std::endl;
+    std::copy(L.begin(), L.end(),
+        std::ostream_iterator<int>(std::cout, " "));
 
     return 0;
 }
