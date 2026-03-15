@@ -13,20 +13,20 @@ int main()
     int n;
     
     std::cout << "Введите четное количество элементов: ";
-    std::cin >> n;
+    
+    std::list<int> L;
+    std::copy(
+        std::istream_iterator<int>(std::cin),
+        std::istream_iterator<int>(),
+        std::back_inserter(L)
+    );
 
-    if (n % 2 != 0)
+    if (L.size() % 2 != 0)
     {
-        std::cout << "Ошибка: n должно быть четным\n";
+        std::cout << "Ошибка: количество элементов должно быть четным\n";
         return 0;
     }
-
-    std::list<int> L;
-
-    std::cout << "Введите элементы: ";
-        std::copy_n(std::istream_iterator<int>(std::cin),
-        n,
-        std::back_inserter(L));
+    
     auto i = L.begin();
     std::advance(i, L.size() / 2);
 
